@@ -1,0 +1,359 @@
+body {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.88), rgba(0, 0, 0, 0.88)), url(bg.jpg);
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    margin: 0 auto;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    color: #fff;
+}
+
+.container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* Estilos para las pantallas */
+.screen {
+    width: 100%;
+    max-width: 400px; /* Ajusta según el tamaño deseado para el reproductor y la lista */
+    border-radius: 15px;
+    padding: 25px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.screen.hidden {
+    display: none; /* Oculta la pantalla */
+    opacity: 0;
+    transform: translateY(20px);
+    pointer-events: none; /* Deshabilita interacciones cuando está oculto */
+}
+
+.screen.active {
+    display: flex; /* Muestra la pantalla */
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.cover-button {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    border-radius: 10px;
+    overflow: hidden;
+    display: block;
+    width: 100%;
+    max-width: 250px;
+    transition: transform 0.3s ease;
+}
+
+.cover-button:hover {
+    transform: scale(1.02);
+}
+
+.album-cover {
+    width: 100%;
+    height: 225px;
+    object-fit: cover;
+    display: block;
+    border-radius: 10px;
+}
+
+.song-info {
+    text-align: center;
+}
+
+.song-title {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.artist-name {
+    font-size: 1em;
+    color: #bbb;
+}
+
+.progress-bar-container {
+    width: 90%;
+    height: 8px; 
+    background-color: #555;
+    border-radius: 5px;
+    position: relative;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    cursor: pointer; 
+}
+
+.progress-bar {
+    width: 0%; /* Empezará en 0% */
+    height: 100%;
+    background-color: #007bff;
+    border-radius: 5px;
+    transition: width 0.1s linear; /* Transición suave para el progreso */
+}
+
+.controls {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 90%;
+}
+
+.control-button {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    display: flex; /* Para centrar la imagen dentro del botón si es necesario */
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.2s ease; /* Efecto al hacer clic */
+}
+
+.control-button:hover .button-icon {
+    opacity: 0.8; /* Ligeramente más transparente al pasar el ratón */
+}
+
+.control-button:active {
+    transform: scale(0.95); /* Efecto de "presión" al hacer clic */
+}
+
+.button-icon {
+    width: 35px; /* Por ejemplo, cambia de 30px a 35px */
+    height: 35px; /* Asegura que la altura sea la misma para mantener la proporción */
+    object-fit: contain;
+}
+
+/* 2. Para ajustar el tamaño de un icono ESPECÍFICO (como el botón de reproducir/pausar) */
+.main-play-button .button-icon {
+    width: 30px; /* Por ejemplo, cambia de 50px a 60px */
+    height: 30px;
+}
+
+/* Eliminado el .time-display */
+
+/* Estilos para la lista de canciones */
+#songList {
+    list-style: none;
+    padding: 0;
+    width: 100%;
+    margin-top: 20px;
+}
+
+#songList li {
+    background-color: rgba(255, 255, 255, 0.1);
+    margin-bottom: 10px;
+    padding: 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#songList li:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+#songList li .song-item-info {
+    text-align: left;
+}
+
+#songList li .song-item-title {
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+#songList li .song-item-artist {
+    font-size: 0.9em;
+    color: #bbb;
+}
+
+/* Estilos para el botón de volver */
+.back-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    align-self: flex-start; /* Alinea a la izquierda dentro del flex container */
+    margin-bottom: 20px;
+    width: 15px;
+    height: 15px;
+    padding: 0;
+}
+
+.back-button .button-icon {
+    width: 25px; /* Tamaño del icono de volver */
+    height: 25px;
+}
+
+/* Ajustes para el reproductor ahora que tiene un botón de volver */
+#playerScreen .player-card { 
+    width: 100%;
+}
+
+
+/* Media Queries para responsividad */
+@media (max-width: 480px) {
+    .screen { /* Aplica a ambas pantallas */
+        padding: 15px;
+        max-width: 95%;
+    }
+
+    .cover-button {
+        max-width: 200px;
+    }
+
+    .song-title {
+        font-size: 1.3em;
+    }
+
+    .artist-name {
+        font-size: 0.9em;
+    }
+
+    .button-icon { /* Tamaño de iconos en pantallas pequeñas */
+        width: 30px; /* Ajusta este valor */
+        height: 30px; /* Ajusta este valor */
+    }
+
+    .main-play-button .button-icon { /* Tamaño del icono principal de reproducir/pausar en pantallas pequeñas */
+        width: 30px; /* Ajusta este valor */
+        height: 30px; /* Ajusta este valor */
+    }
+
+    .back-buttonc{
+        height: 10px;
+        width: 10px;
+    }
+}
+
+@media (max-width: 320px) {
+    .screen {
+        padding: 10px;
+    }
+
+    .cover-button {
+        max-width: 180px;
+    }
+
+    .song-title {
+        font-size: 1.1em;
+    }
+
+    .artist-name {
+        font-size: 0.8em;
+    }
+
+    .button-icon { /* Tamaño de iconos en pantallas muy pequeñas */
+        width: 25px; /* Ajusta este valor */
+        height: 25px; /* Ajusta este valor */
+    }
+
+    .main-play-button .button-icon { /* Tamaño del icono principal de reproducir/pausar en pantallas muy pequeñas */
+        width: 30px; /* Ajusta este valor */
+        height: 30px; /* Ajusta este valor */
+    }
+}
+
+@media (max-width: 160px) {
+    .screen {
+        padding: 10px;
+    }
+
+    .cover-button {
+        max-width: 180px;
+    }
+
+    .song-title {
+        font-size: 1.1em;
+    }
+
+    .artist-name {
+        font-size: 0.8em;
+    }
+
+    .button-icon { /* Tamaño de iconos en pantallas muy pequeñas */
+        width: 10px; /* Ajusta este valor */
+        height: 10px; /* Ajusta este valor */
+    }
+
+    .main-play-button .button-icon { /* Tamaño del icono principal de reproducir/pausar en pantallas muy pequeñas */
+        width: 20px; /* Ajusta este valor */
+        height: 20px; /* Ajusta este valor */
+    }
+}
+
+@media (max-width: 80px) {
+    .screen {
+        padding: 10px;
+    }
+
+    .cover-button {
+        max-width: 180px;
+    }
+
+    .song-title {
+        font-size: 1.1em;
+    }
+
+    .artist-name {
+        font-size: 0.8em;
+    }
+
+    .button-icon { /* Tamaño de iconos en pantallas muy pequeñas */
+        width: 10px; /* Ajusta este valor */
+        height: 10px; /* Ajusta este valor */
+    }
+
+    .main-play-button .button-icon { /* Tamaño del icono principal de reproducir/pausar en pantallas muy pequeñas */
+        width: 20px; /* Ajusta este valor */
+        height: 20px; /* Ajusta este valor */
+    }
+}
+
+#customIcon1 .button-icon {
+    width: 20px; /* Cambia este valor al tamaño que desees */
+    height: 20px; /* Asegura que sea el mismo valor que el width para mantener la proporción */
+}
+
+/* Asegúrate de ajustar también en las Media Queries si es necesario para la responsividad */
+@media (max-width: 480px) {
+    /* ... (otras reglas de media query) ... */
+
+    #customIcon1 .button-icon {
+        width: 17px; /* Ajusta para pantallas pequeñas */
+        height: 17px;
+    }
+}
+
+@media (max-width: 320px) {
+    /* ... (otras reglas de media query) ... */
+
+    #customIcon1 .button-icon {
+        width: 17px; /* Ajusta para pantallas muy pequeñas */
+        height: 17px;
+    }
+}
+
+
+/* /\/\
+  ( o.o)
+   > ^<  */
+
